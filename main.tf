@@ -18,18 +18,13 @@ provider "azurerm" {
   features {}
 }
 
-resource "random_integer" "random_integer" {
-  min = 10000
-  max = 99999
-}
-
 resource "azurerm_resource_group" "resource_group" {
-  name     = "${var.resource_group_name}${random_integer.random_integer.result}"
+  name     = var.resource_group_name
   location = var.resource_group_location
 }
 
 resource "azurerm_service_plan" "service_plan" {
-  name                = "${var.app_service_plan_name}-${random_integer.random_integer.result}"
+  name                = var.app_service_plan_name
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
   os_type             = "Linux"
@@ -37,7 +32,7 @@ resource "azurerm_service_plan" "service_plan" {
 }
 
 resource "azurerm_linux_web_app" "web_app" {
-  name                = "${var.app_service_name}-${random_integer.random_integer.result}"
+  name                = var.app_service_name
   resource_group_name = azurerm_service_plan.service_plan.resource_group_name
   location            = azurerm_service_plan.service_plan.location
   service_plan_id     = azurerm_service_plan.service_plan.id
@@ -65,7 +60,7 @@ resource "azurerm_app_service_source_control" "source" {
 }
 
 resource "azurerm_mssql_server" "mssql_server" {
-  name                         = "${var.sql_server_name}-${random_integer.random_integer.result}"
+  name                         = var.sql_server_name
   resource_group_name          = azurerm_resource_group.resource_group.name
   location                     = azurerm_resource_group.resource_group.location
   version                      = "12.0"
@@ -89,4 +84,3 @@ resource "azurerm_mssql_firewall_rule" "firewall" {
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
 }
-
