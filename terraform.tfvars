@@ -1,7 +1,7 @@
 resource_group_name     = "TaskBoardRG"
 resource_group_location = "West Europe"
 app_service_plan_name   = "taskboard-plan"
-app_service_name        = "taskboard"
+app_service_name        = "taskboard-daniel"
 sql_server_name         = "taskboard-db-server"
 sql_database_name       = "taskboard-db"
 sql_admin_login         = "adminadmin"
